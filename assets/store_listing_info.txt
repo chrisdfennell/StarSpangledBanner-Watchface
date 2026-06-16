@@ -14,7 +14,7 @@ Star Spangled Banner — 4th of July Face
 ------------------------------------------------------------------------
 FIELD: Description (Max 4000 characters)
 ------------------------------------------------------------------------
-Star Spangled Banner is a premium digital watch face that brings Independence Day to your wrist all year round — fireworks rise from an open field and burst overhead, a waving American flag stands in the breeze, fireflies drift through the summer night, and a distant tree line rings the horizon, all procedurally rendered. Large outlined time and clean complications keep you connected through the celebration.
+Star Spangled Banner is a premium digital watch face that brings Independence Day to your wrist all year round — and celebrates America's 250th in 2026. Fireworks rise from an open field and burst overhead, a waving American flag stands in the breeze, fireflies drift through the summer night, and a distant tree line rings the horizon, all procedurally rendered. Large outlined time and clean complications keep you connected through the celebration.
 
 FEATURES & DETAILS
 • FIREWORKS SHOW: Rockets streak up from the field and burst into expanding, drooping, fading showers of color overhead — several shells at once, all evening and night. A true 4th-of-July sky.
@@ -68,6 +68,14 @@ Version 1.0.0 — Initial Release
 • Configurable complications, a red-white-blue steps bar, full AMOLED + MIP support, and a burn-in-safe always-on layout.
 
 Happy Independence Day!
+
+
+------------------------------------------------------------------------
+FIELD: Search Keywords / Tags (comma-separated)
+------------------------------------------------------------------------
+fireworks, 4th of July, July 4th, Independence Day, patriotic, American flag,
+USA, stars and stripes, red white and blue, 250th, semiquincentennial, 1776,
+summer, field, fireflies, eagle, digital, AMOLED, complications
 
 
 ------------------------------------------------------------------------
