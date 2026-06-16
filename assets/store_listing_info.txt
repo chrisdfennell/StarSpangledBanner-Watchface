@@ -50,8 +50,11 @@ Equip Star Spangled Banner, and let the rockets fly.
 ------------------------------------------------------------------------
 FIELD: What's New in this Version (Max 4000 characters)
 ------------------------------------------------------------------------
-Version 1.0.0 — Initial Release
+Version 1.0.1
 
+• BRIGHTER FIREWORKS: The bursts now glow — a halo behind every spark, white-hot cores, and a detonation flash — and are far more visible on MIP / Solar panels (e.g. tactix 8 Solar).
+
+Previously in 1.0.0 — Initial Release:
 • Fireworks that rise from the field and burst overhead through the evening and night.
 • A living summer sky on the real sunrise/sunset, an open rolling field ringed by a distant tree line, and a waving American flag.
 • Fireflies at night, a spinning star seconds marker, and occasional field critters (eagle, deer, rabbit, butterfly, owl, fox, raccoon, bat).

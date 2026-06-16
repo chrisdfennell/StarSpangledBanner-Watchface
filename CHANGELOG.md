@@ -4,6 +4,17 @@ All notable changes to Star Spangled Banner are documented here. The format is b
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project aims to
 follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-06-16
+
+### Changed
+- **Brighter fireworks, especially on MIP / Solar panels.** Bursts now render
+  with a soft glow halo behind every spark, hotter near-white spark bodies that
+  stay bright longer (fade as `1 - bf²`), white-hot cores, a quick central
+  detonation flash, and bigger/more sparks. MIP panels (e.g. tactix 8 Solar) use
+  a dedicated path — solid, saturated color halos with white cores instead of dim
+  glows that quantized to black — so the show is clearly visible on low-contrast
+  screens too. Refreshed the promo art and preview video to match.
+
 ## [1.0.0] - 2026-06-16
 
 Initial release of **Star Spangled Banner** — a 4th of July / Independence Day watch
@@ -59,4 +70,5 @@ beneath a waving American flag.
   gradient rendered once into a `BufferedBitmap`; and loop-safe sun/angle math with a
   non-finite guard.
 
+[1.0.1]: https://github.com/chrisdfennell/StarSpangledBanner-Watchface/releases/tag/v1.0.1
 [1.0.0]: https://github.com/chrisdfennell/StarSpangledBanner-Watchface/releases/tag/v1.0.0
