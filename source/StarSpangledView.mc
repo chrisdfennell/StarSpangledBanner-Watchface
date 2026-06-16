@@ -586,50 +586,94 @@ class StarSpangledView extends WatchUi.WatchFace {
             var color = FIRE_COLORS[hsh % FIRE_COLORS.size()];
 
             if (pos < RISE) {
-                // --- Rising rocket: a bright comet head + a short trail ---
+                // --- Rising rocket: a bright comet head (with a soft glow) + trail ---
                 var rf = pos.toFloat() / RISE.toFloat();           // 0..~0.66
                 var headY = (fieldTop + (burstY - fieldTop) * rf).toNumber();
-                dc.setColor(0xFFE9A8, Graphics.COLOR_TRANSPARENT);
-                dc.fillCircle(tx, headY, 2);
-                dc.setColor(scaleColor(0xFFB04A, 0.6), Graphics.COLOR_TRANSPARENT);
+                dc.setColor(scaleColor(0xFFB04A, 0.5), Graphics.COLOR_TRANSPARENT);
+                dc.fillCircle(tx, headY, 4);                        // glow
+                dc.setColor(0xFFF3C0, Graphics.COLOR_TRANSPARENT);
+                dc.fillCircle(tx, headY, 2);                        // hot head
+                dc.setColor(scaleColor(0xFFB04A, 0.7), Graphics.COLOR_TRANSPARENT);
                 for (var j = 1; j <= 3; j++) {
                     var ty = headY + (j * (h * 0.025)).toNumber();
                     if (ty < fieldTop) { dc.fillCircle(tx, ty, 1); }
                 }
             } else if (pos < RISE + BURST) {
-                // --- Burst: a ring (or two) of sparks expanding + drooping ---
+                // --- Burst: an expanding, drooping ring of GLOWING sparks ---
                 var bf = (pos - RISE).toFloat() / BURST.toFloat();  // 0..~1
-                var ease = 1.0 - (1.0 - bf) * (1.0 - bf);           // ease-out
-                var maxR = (w * (finale ? 0.21 : 0.17));
+                var ease = 1.0 - (1.0 - bf) * (1.0 - bf);           // ease-out expand
+                var maxR = (w * (finale ? 0.23 : 0.19));
                 var rad = (maxR * ease).toNumber();
                 var sag = (h * 0.10 * bf * bf).toNumber();          // gravity droop
-                var bright = 1.0 - bf;                              // fade out
-                var sparkC = lerpColor(0x101010, color, bright * 0.75 + 0.25);
+                var bright = 1.0 - bf * bf;                         // stay bright longer
+                if (bright < 0.0) { bright = 0.0; }
+                var cy0 = burstY + sag;
+                var mip = mFlatGlobes;   // MIP/Solar: flat fills, low contrast, small palette
 
-                // Opening flash
-                if (bf < 0.22) {
-                    dc.setColor(0xFFFFFF, Graphics.COLOR_TRANSPARENT);
-                    dc.fillCircle(tx, burstY, 3);
+                // On MIP, soft/dim glows quantize to black and vanish — so use solid,
+                // saturated color halos with white-hot cores and bigger sparks, and
+                // convey the fade by SHRINKING rather than darkening. On AMOLED, keep
+                // the soft hot-to-glow look that blends nicely.
+                var bodyC; var glowC; var sparkR; var glowR;
+                if (mip) {
+                    bodyC = lerpColor(color, 0xFFFFFF, 0.18);   // vivid, stays bright
+                    glowC = color;                              // pure-color halo
+                    sparkR = (bf < 0.5) ? 4 : 3;
+                    glowR = sparkR + 2;
+                } else {
+                    bodyC = lerpColor(color, 0xFFFFFF, 0.22 * (1.0 - bf));
+                    bodyC = lerpColor(0x141414, bodyC, bright * 0.55 + 0.45);
+                    glowC = scaleColor(color, bright * 0.45 + 0.14);
+                    sparkR = (bf < 0.5) ? 3 : 2;
+                    glowR = sparkR + 3;
                 }
 
-                var nspark = (mQuality >= 2) ? (finale ? 16 : 12) : 8;
-                dc.setColor(sparkC, Graphics.COLOR_TRANSPARENT);
+                var nspark = (mQuality >= 2) ? (finale ? 18 : 14) : 10;
+                var twoStep = 2.0 * Math.PI / nspark;
+                var rot = cyc.toFloat() * 0.3;
+
+                // Central flash at detonation; fades fast (shrinks) so nothing lingers.
+                if (bf < 0.45) {
+                    var fr = 1.0 - bf / 0.45;
+                    if (mip) {
+                        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+                        dc.fillCircle(tx, cy0, (rad * 0.35 * fr + 3).toNumber());
+                    } else {
+                        dc.setColor(scaleColor(color, 0.32 * fr + 0.10), Graphics.COLOR_TRANSPARENT);
+                        dc.fillCircle(tx, cy0, (rad * 0.5 + 4).toNumber());
+                    }
+                    dc.setColor(lerpColor(color, 0xFFFFFF, 0.75), Graphics.COLOR_TRANSPARENT);
+                    dc.fillCircle(tx, cy0, (5.0 * fr + 2).toNumber());
+                }
+
+                // 1) Color halo behind every spark.
+                dc.setColor(glowC, Graphics.COLOR_TRANSPARENT);
                 for (var s = 0; s < nspark; s++) {
-                    var ang = s * (2.0 * Math.PI / nspark) + cyc.toFloat() * 0.3;
-                    var px = (tx + rad * Math.cos(ang)).toNumber();
-                    var py = (burstY + rad * Math.sin(ang)).toNumber() + sag;
-                    dc.fillCircle(px, py, (bf < 0.6) ? 2 : 1);
+                    var a = s * twoStep + rot;
+                    dc.fillCircle((tx + rad * Math.cos(a)).toNumber(), (cy0 + rad * Math.sin(a)).toNumber(), glowR);
+                }
+                // 2) Bright spark bodies.
+                dc.setColor(bodyC, Graphics.COLOR_TRANSPARENT);
+                for (var s = 0; s < nspark; s++) {
+                    var a = s * twoStep + rot;
+                    dc.fillCircle((tx + rad * Math.cos(a)).toNumber(), (cy0 + rad * Math.sin(a)).toNumber(), sparkR);
+                }
+                // 3) White-hot sparkle cores early in the burst.
+                if (bf < 0.65) {
+                    dc.setColor(0xFFFFFF, Graphics.COLOR_TRANSPARENT);
+                    for (var s = 0; s < nspark; s++) {
+                        var a = s * twoStep + rot;
+                        dc.fillCircle((tx + rad * Math.cos(a)).toNumber(), (cy0 + rad * Math.sin(a)).toNumber(), (mip ? 2 : 1));
+                    }
                 }
 
-                // Inner ring at higher quality for a fuller burst.
+                // Inner ring for a fuller burst (higher quality).
                 if (mQuality >= 3) {
                     var rad2 = (rad * 0.55).toNumber();
-                    dc.setColor(lerpColor(sparkC, 0xFFFFFF, 0.25), Graphics.COLOR_TRANSPARENT);
+                    dc.setColor(lerpColor(bodyC, 0xFFFFFF, 0.25), Graphics.COLOR_TRANSPARENT);
                     for (var s2 = 0; s2 < nspark; s2++) {
-                        var ang2 = (s2 + 0.5) * (2.0 * Math.PI / nspark) + cyc.toFloat() * 0.3;
-                        var px2 = (tx + rad2 * Math.cos(ang2)).toNumber();
-                        var py2 = (burstY + rad2 * Math.sin(ang2)).toNumber() + (sag / 2);
-                        dc.fillCircle(px2, py2, 1);
+                        var a2 = (s2 + 0.5) * twoStep + rot;
+                        dc.fillCircle((tx + rad2 * Math.cos(a2)).toNumber(), (cy0 + rad2 * Math.sin(a2)).toNumber(), 2);
                     }
                 }
             }
