@@ -1,0 +1,27 @@
+<properties>
+    <!-- Show the date line under the time -->
+    <property id="ShowDate" type="boolean">true</property>
+
+    <!-- Fireworks: rockets rise from the field and burst overhead at dusk/night. -->
+    <property id="ShowFireworks" type="boolean">true</property>
+
+    <!-- America's 250th: a golden "1776 * 2026" Semiquincentennial banner.
+         Defaults on for the 2026 anniversary year. -->
+    <property id="Show250" type="boolean">true</property>
+
+    <!-- Grand Finale: denser, faster fireworks day & night, bunting across the top,
+         a spotlit flag, and an occasional biplane flyover trailing a pennant. -->
+    <property id="FestiveMode" type="boolean">false</property>
+
+    <!-- Field critters: occasional visitors (eagle, deer, rabbit, butterfly, owl,
+         fox, raccoon, bat) cross the scene now and then. -->
+    <property id="ShowCritters" type="boolean">true</property>
+
+    <!-- Steps that equal a full progress bar. 0 = use ActivityMonitor's own step goal. -->
+    <property id="StepGoalOverride" type="number">0</property>
+
+    <!-- Bottom complications. 0=Off 1=Heart Rate 2=Body Battery 3=Device Battery
+         4=Steps 5=Calories. Defaults: left=Heart Rate, right=Device Battery. -->
+    <property id="LeftComplication" type="number">1</property>
+    <property id="RightComplication" type="number">3</property>
+</properties>

@@ -1,0 +1,35 @@
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <string id="AppName">Star Spangled Banner</string>
+
+    <!-- Settings -->
+    <string id="ShowDateTitle">Show Date</string>
+    <string id="ShowDatePrompt">Show the date line beneath the time.</string>
+
+    <string id="FestiveTitle">🎆 Grand Finale</string>
+    <string id="FestivePrompt">Crank up the show: denser, faster fireworks all day and night, patriotic bunting across the top, a spotlit flag, and a biplane that trails a star-spangled pennant now and then.</string>
+
+    <string id="ShowFireworksTitle">🎇 Fireworks</string>
+    <string id="ShowFireworksPrompt">Rockets rise from the field and burst overhead through the evening and night.</string>
+
+    <string id="Show250Title">🎂 America's 250th</string>
+    <string id="Show250Prompt">Mark the Semiquincentennial — a golden "1776 ★ 2026" banner celebrating 250 years of American independence.</string>
+
+    <string id="ShowCrittersTitle">🦅 Field Critters</string>
+    <string id="ShowCrittersPrompt">Occasional field visitors cross the scene — a soaring bald eagle, a grazing deer, a hopping rabbit or a fluttering butterfly by day; an owl, a red fox, a raccoon or a darting bat by night.</string>
+
+    <string id="StepGoalTitle">Step Goal Override</string>
+    <string id="StepGoalPrompt">Steps for a full progress bar. Set 0 to use the watch's own daily step goal.</string>
+
+    <!-- Complication pickers -->
+    <string id="LeftCompTitle">Bottom-Left Complication</string>
+    <string id="RightCompTitle">Bottom-Right Complication</string>
+    <string id="CompPrompt">Choose what this complication shows.</string>
+
+    <!-- Complication option labels (emoji render in the Garmin Connect app) -->
+    <string id="CompOff">Off</string>
+    <string id="CompHeartRate">❤ Heart Rate</string>
+    <string id="CompBodyBattery">⚡ Body Battery</string>
+    <string id="CompDeviceBattery">🔋 Device Battery</string>
+    <string id="CompSteps">👣 Steps</string>
+    <string id="CompCalories">🔥 Calories</string>
+</strings>
